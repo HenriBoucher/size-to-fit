@@ -3,6 +3,7 @@ package myE4Package;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Singleton;
 
 import org.eclipse.e4.core.di.annotations.Creatable;
@@ -24,6 +25,12 @@ public class DegreeGradientMap {
 	DegreeGradientMap() {
 		System.err.println("In DegreeGradientMap constructor.");
 		System.err.println(this.toString());
+	}
+	
+	@PreDestroy
+	public void cleanup()
+	{
+		System.err.println("In PreDestroy");
 	}
 	
 }
