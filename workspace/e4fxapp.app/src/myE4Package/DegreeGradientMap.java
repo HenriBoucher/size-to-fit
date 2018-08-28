@@ -3,13 +3,16 @@ package myE4Package;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.Adapters;
-import org.eclipse.core.runtime.PlatformObject;
+import javax.inject.Singleton;
+
+import org.eclipse.e4.core.di.annotations.Creatable;
 
 import javafx.animation.Timeline;
 import javafx.scene.paint.LinearGradient;
 
-public class DegreeGradientMap extends PlatformObject {
+@Creatable
+@Singleton
+public class DegreeGradientMap {
 	class GradientSet {
 		LinearGradient gradient;
 		Timeline forward;
@@ -19,7 +22,8 @@ public class DegreeGradientMap extends PlatformObject {
 	private Map <Double, GradientSet> dg = new HashMap <Double, GradientSet>();
 	
 	DegreeGradientMap() {
-		dg = Adapters.adapt(dg, dg.getClass(), true);
+		System.err.println("In DegreeGradientMap constructor.");
+		System.err.println(this.toString());
 	}
 	
 }

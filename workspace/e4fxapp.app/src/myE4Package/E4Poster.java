@@ -11,6 +11,9 @@ import javafx.scene.layout.BorderPane;
 public class E4Poster {
  	@Inject
 	private IEventBroker eventBroker;
+ 	
+ 	@Inject
+ 	private DegreeGradientMap dgm;
 	
 	@PostConstruct
 	void initUI(BorderPane pane) {
@@ -47,6 +50,8 @@ public class E4Poster {
 		*/
  		Button b = new Button("In Poster");
 		pane.setCenter(b);
+		System.out.println(dgm.toString());
+		
 	}
 
 }
