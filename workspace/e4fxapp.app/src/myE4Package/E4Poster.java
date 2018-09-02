@@ -7,6 +7,7 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import myE4Package.DegreeGradientMap.GradientSet;
 
 public class E4Poster {
  	@Inject
@@ -50,7 +51,16 @@ public class E4Poster {
 		*/
  		Button b = new Button("In Poster");
 		pane.setCenter(b);
+		System.out.println("    ----------- In poster just before call to getGradientSet");
+		GradientSet test = dgm.getGradientSet(0.0);
+		System.out.println("  ------------   " + test);
 		System.out.println(dgm.toString());
+		GradientSet dgmInstance = dgm.getGradientSet(0.0);
+		System.out.println("first 0 " + dgmInstance.toString());
+		dgmInstance = dgm.getGradientSet(90.0);
+		System.out.println("first 90 " + dgmInstance.toString());
+		dgmInstance = dgm.getGradientSet(0.0);
+		System.out.println("second 0 "+ dgmInstance.toString());
 		
 	}
 
