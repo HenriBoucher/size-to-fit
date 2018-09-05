@@ -30,6 +30,8 @@ public class DegreeGradientMap {
 		Timeline reverse;
 	}
 	
+	public GradientSet gradientSet;
+	
 	public Map <Double, GradientSet> dgm = new HashMap <Double, GradientSet>();
 	
 	DegreeGradientMap() {
@@ -39,13 +41,17 @@ public class DegreeGradientMap {
 	
 	public GradientSet getGradientSet ( Double gradientSlopeDegree ) {
 		
-		GradientSet gradientSet;
+//		GradientSet gradientSet;
+
 		System.out.println("value of this " + this + " and this.dgm " + this.dgm);
 		System.out.println("in getGradientSet " + this.toString());
-		gradientSet = this.dgm.get(gradientSlopeDegree);
-		System.out.println("after dg.get " + gradientSet.toString());
+		if (this.dgm.containsKey(gradientSlopeDegree)) {
+			System.err.println("containsKey is true " + gradientSlopeDegree);
+			gradientSet = this.dgm.get(gradientSlopeDegree);
+		}
+		else {
+			System.err.println("containsKey is false " + gradientSlopeDegree);
 		
-		if (gradientSet == null) {
 			Rectangle rect = new Rectangle();
 			Timeline timeline = new Timeline();
 			
