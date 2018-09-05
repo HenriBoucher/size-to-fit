@@ -35,23 +35,17 @@ public class DegreeGradientMap {
 	public Map <Double, GradientSet> dgm = new HashMap <Double, GradientSet>();
 	
 	DegreeGradientMap() {
-		System.err.println("In DegreeGradientMap constructor.");
-		System.err.println(this.toString());
+		
 	}
 	
 	public GradientSet getGradientSet ( Double gradientSlopeDegree ) {
-		
-//		GradientSet gradientSet;
 
-		System.out.println("value of this " + this + " and this.dgm " + this.dgm);
-		System.out.println("in getGradientSet " + this.toString());
+		GradientSet gradientSet = new GradientSet();
+
 		if (this.dgm.containsKey(gradientSlopeDegree)) {
-			System.err.println("containsKey is true " + gradientSlopeDegree);
 			gradientSet = this.dgm.get(gradientSlopeDegree);
 		}
 		else {
-			System.err.println("containsKey is false " + gradientSlopeDegree);
-		
 			Rectangle rect = new Rectangle();
 			Timeline timeline = new Timeline();
 			
@@ -87,6 +81,11 @@ public class DegreeGradientMap {
 			timeline.setCycleCount(Timeline.INDEFINITE);
 			gradientSet.rect = rect;
 			gradientSet.forward = timeline;
+			gradientSet.forward.play();
+			gradientSet.reverse = timeline;
+			gradientSet.stopped = timeline;
+			
+			this.dgm.put(gradientSlopeDegree, gradientSet);
 		}
 	
 		return gradientSet;
@@ -96,6 +95,7 @@ public class DegreeGradientMap {
 	public void cleanup()
 	{
 		System.err.println("In PreDestroy");
+		dgm.forEach((k,v)->System.out.println("v = " + v.toString()));
 	}
 	
 }
