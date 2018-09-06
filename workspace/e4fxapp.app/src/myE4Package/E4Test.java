@@ -121,7 +121,7 @@ public class E4Test {
   		
   		
  // ******************* original rect and timeline 		
-  		rect = new Rectangle(0, 0, 200, 20);
+  		rect = new Rectangle(0, 0, 50, 20);
 		timeline = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -151,7 +151,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect1 = new Rectangle(0, 0, 200, 20);
+  		rect1 = new Rectangle(0, 0, 50, 20);
 		timeline1 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -181,7 +181,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect2 = new Rectangle(0, 0, 200, 20);
+  		rect2 = new Rectangle(0, 0, 50, 20);
 		timeline2 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -211,7 +211,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect3 = new Rectangle(0, 0, 200, 20);
+  		rect3 = new Rectangle(0, 0, 50, 20);
 		timeline3 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -241,7 +241,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect4 = new Rectangle(0, 0, 200, 20);
+  		rect4 = new Rectangle(0, 0, 50, 20);
 		timeline4 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -271,7 +271,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect5 = new Rectangle(0, 0, 200, 20);
+  		rect5 = new Rectangle(0, 0, 50, 20);
 		timeline5 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -301,7 +301,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect6 = new Rectangle(0, 0, 200, 20);
+  		rect6 = new Rectangle(0, 0, 50, 20);
 		timeline6 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -331,7 +331,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect7 = new Rectangle(0, 0, 200, 20);
+  		rect7 = new Rectangle(0, 0, 50, 20);
 		timeline7 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -361,7 +361,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect8 = new Rectangle(0, 0, 200, 20);
+  		rect8 = new Rectangle(0, 0, 50, 20);
 		timeline8 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;
@@ -391,7 +391,7 @@ public class E4Test {
 		
   		
  // ******************* original rect and timeline 		
-  		rect9 = new Rectangle(0, 0, 200, 20);
+  		rect9 = new Rectangle(0, 0, 50, 20);
 		timeline9 = new Timeline();
 		for (int i = 0; i < 10; i++) {
 			int innerIterator = i;

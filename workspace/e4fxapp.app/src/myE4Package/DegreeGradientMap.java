@@ -17,6 +17,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 
@@ -25,9 +26,10 @@ import javafx.util.Duration;
 public class DegreeGradientMap {
 	public class GradientSet {
 		Rectangle rect;
-		Timeline stopped;
-		Timeline forward;
-		Timeline reverse;
+		Timeline timeline;
+//		Timeline stopped;
+//		Timeline forward;
+//		Timeline reverse;
 	}
 	
 	public GradientSet gradientSet;
@@ -46,7 +48,7 @@ public class DegreeGradientMap {
 			gradientSet = this.dgm.get(gradientSlopeDegree);
 		}
 		else {
-			Rectangle rect = new Rectangle();
+			Rectangle rect = new Rectangle(100, 20);
 			Timeline timeline = new Timeline();
 			
 			double widthOfOneGradientCycle = 20.0;
@@ -79,11 +81,15 @@ public class DegreeGradientMap {
 				timeline.getKeyFrames().add(kf);
 			}
 			timeline.setCycleCount(Timeline.INDEFINITE);
+			rect.getTransforms().add(new Rotate(gradientSlopeDegree));
 			gradientSet.rect = rect;
-			gradientSet.forward = timeline;
-			gradientSet.forward.play();
-			gradientSet.reverse = timeline;
-			gradientSet.stopped = timeline;
+			timeline.play();
+			gradientSet.timeline = timeline;
+//			gradientSet.forward = timeline;
+//			gradientSet.forward.play();
+//			timeline.setRate(-timeline.getRate());
+//			gradientSet.reverse = timeline;
+//			gradientSet.stopped = timeline;
 			
 			this.dgm.put(gradientSlopeDegree, gradientSet);
 		}
