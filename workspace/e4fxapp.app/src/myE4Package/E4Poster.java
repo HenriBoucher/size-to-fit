@@ -62,6 +62,8 @@ public class E4Poster {
 		Timeline t1 = new Timeline();
 		t1 = dgmInstance.timeline;
 		r1 = dgmInstance.rect;
+
+		t1.pause();
 		
 /*		dgmInstance = dgm.getGradientSet(180.0);
 		

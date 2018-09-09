@@ -29,7 +29,7 @@ public class MyAddon {
 				{
 					eventBroker.post("DATA", i++);
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

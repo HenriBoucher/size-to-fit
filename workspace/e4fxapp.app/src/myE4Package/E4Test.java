@@ -446,7 +446,7 @@ public class E4Test {
  */
 		pane.setBottom(t);
 		
-		timeline.play();
+//		timeline.play();
 		timeline1.play();
 		timeline2.play();
 		timeline3.play();

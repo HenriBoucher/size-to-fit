@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Paint;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
@@ -82,8 +83,15 @@ public class DegreeGradientMap {
 			}
 			timeline.setCycleCount(Timeline.INDEFINITE);
 			rect.getTransforms().add(new Rotate(gradientSlopeDegree));
+			LinearGradient start = new LinearGradient(xStartStatic, yStartStatic, xEndStatic, yEndStatic, 
+					false, CycleMethod.REPEAT, new Stop[] {
+							new Stop(0.0, Color.WHITE),
+							new Stop(0.5, Color.BLACK),
+							new Stop(1.0, Color.WHITE)});
+			rect.setFill(start);
 			gradientSet.rect = rect;
 			timeline.play();
+
 			gradientSet.timeline = timeline;
 //			gradientSet.forward = timeline;
 //			gradientSet.forward.play();
