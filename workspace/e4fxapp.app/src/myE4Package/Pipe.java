@@ -8,7 +8,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 public class Pipe extends Rectangle {
@@ -62,6 +64,8 @@ public class Pipe extends Rectangle {
 	public Pipe() {
 		super();
 		this.setFill(Color.BLUE);
+		Node head = super.lookup("1LEFT1CENTER");
+		Node tail = super.lookup("1RIGHT1CENTER");
 	}
 
 }
