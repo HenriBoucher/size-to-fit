@@ -63,9 +63,21 @@ public class Pipe extends Rectangle {
     
 	public Pipe() {
 		super();
-		this.setFill(Color.BLUE);
-		Node head = super.lookup("1LEFT1CENTER");
-		Node tail = super.lookup("1RIGHT1CENTER");
+		this.setFill(Color.GREY);
+		
+		Integer headColumn = this.getHeadColumn();
+		Integer headRow = this.getHeadRow();
+		String headId = "-pipe-" + headColumn + "-" + this.getHeadHPos()
+				+ "-" + headRow + "-" + this.getHeadVPos();
+		Node head = super.lookup(headId);
+		if ( head == null ){ 
+			head = new Line(10, 10, 100, 100);
+//			this.getParent().getChildrenUnmodifiable().add(head);
+		
+		System.out.println("In Pipe " + headId);
+		}
+		
+//		Node tail = super.lookup("1RIGHT1CENTER");
 	}
 
 }
