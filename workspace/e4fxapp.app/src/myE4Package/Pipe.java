@@ -1,5 +1,7 @@
 package myE4Package;
 
+import javax.annotation.PostConstruct;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -61,14 +63,13 @@ public class Pipe extends Rectangle {
     public IntegerProperty tailColumnProperty() {return headRow;}
     
     
-	public Pipe() {
-		super();
-		this.setFill(Color.GREY);
-		
+	@PostConstruct
+	public void setHeadTail () {
 		Integer headColumn = this.getHeadColumn();
 		Integer headRow = this.getHeadRow();
 		String headId = "-pipe-" + headColumn + "-" + this.getHeadHPos()
 				+ "-" + headRow + "-" + this.getHeadVPos();
+		System.err.println("built string " + headId);
 		Node head = super.lookup(headId);
 		if ( head == null ){ 
 			head = new Line(10, 10, 100, 100);
@@ -79,5 +80,13 @@ public class Pipe extends Rectangle {
 		
 //		Node tail = super.lookup("1RIGHT1CENTER");
 	}
+	
+	public Pipe() {
+		super();
+		this.setFill(Color.BLUE);
+		System.err.println("in constructor");
+	}
+		
+	
 
 }
