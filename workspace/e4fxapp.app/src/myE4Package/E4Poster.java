@@ -1,13 +1,18 @@
 package myE4Package;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.core.services.events.IEventBroker;
 
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import myE4Package.DegreeGradientMap.GradientSet;
 
@@ -82,8 +87,19 @@ public class E4Poster {
 		
 		pane.getChildren().addAll(r1, r2, r3);
 		*/
+		GridPane root = null;
+		try {
+			root = (GridPane) FXMLLoader.load(getClass().getResource("test.fxml"));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
-		pane.setCenter(r1);
+		pane.setCenter(root);
 		
 //		t1.setRate(-t1.getRate());
 //		dgmInstance.timeline.setRate(-dgmInstance.timeline.getRate());
