@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -73,6 +75,8 @@ public class Pipe extends Rectangle {
 		Node head = super.lookup(headId);
 		if ( head == null ){ 
 			head = new Line(10, 10, 100, 100);
+			GridPane gridpane = (GridPane) getParent();
+			gridpane.getChildren().add(new Button());
 //			this.getParent().getChildrenUnmodifiable().add(head);
 		
 		System.out.println("In Pipe " + headId);
