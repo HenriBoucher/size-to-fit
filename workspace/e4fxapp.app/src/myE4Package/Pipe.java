@@ -1,6 +1,7 @@
 package myE4Package;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -11,6 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -18,6 +20,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 public class Pipe extends Rectangle {
+	
+	@Inject
+	Scene scene;
 	
     private DoubleProperty percentWidth = new SimpleDoubleProperty();
     public final double getPercentWidth(){return percentWidth.get();}
@@ -85,9 +90,15 @@ public class Pipe extends Rectangle {
 //		Node tail = super.lookup("1RIGHT1CENTER");
 	}
 	
-	public Pipe() {
+	public Pipe() {	
 		super();
-		this.setFill(Color.BLUE);
+		
+		this.setFill(Color.RED);
+		this.setArcHeight(100);
+		System.out.println("Parent = " + this);
+		System.out.println("scene = " + scene);
+//		GridPane gridpane = (GridPane) scene.lookup("gridpane");
+//		System.out.println("gridpane = " + gridpane);
 		System.err.println("in constructor");
 	}
 		

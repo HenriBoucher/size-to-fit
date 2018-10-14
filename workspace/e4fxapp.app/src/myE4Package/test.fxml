@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Line?>
 <?import myE4Package.Pipe?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,8 +17,8 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Pipe height="20.0" width="10.0" />
-      <Pipe headColumn="1" headHPos="LEFT" headRow="1" headVPos="CENTER" height="20.0" layoutX="100.0" layoutY="100.0" percentWidth="20.0" tailColumn="1" tailHPos="RIGHT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Pipe id="pipe1" headColumn="1" headHPos="CENTER" headRow="1" headVPos="TOP" height="20.0" percentWidth="20.0" tailColumn="1" tailHPos="CENTER" tailRow="1" tailVPos="BASELINE" width="10.0" />
+      <Pipe id="pipe2" headColumn="1" headHPos="LEFT" headRow="1" headVPos="CENTER" height="20.0" layoutX="100.0" layoutY="100.0" percentWidth="20.0" tailColumn="1" tailHPos="RIGHT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Line id="1LEFT1CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Line id="1RIGHT1CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
    </children>
