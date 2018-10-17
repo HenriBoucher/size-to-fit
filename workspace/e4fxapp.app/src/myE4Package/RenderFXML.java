@@ -25,18 +25,22 @@ public class RenderFXML extends Application {
 			e.printStackTrace();
 		}
 		final GridPane g = root;
-		root.getChildren().forEach(pipe -> {
-			if (pipe instanceof Pipe) {
-				Pipe p = (Pipe) pipe;
-				System.out.println("parent = " + pipe.getParent().getId());
-				System.err.println("in RenderFXML " + pipe.getId());
+		g.setGridLinesVisible(true);
+		root.getChildren().forEach(child -> {
+			if (child instanceof Pipe) {
+				Pipe p = (Pipe) child;
+				System.out.println("parent = " + p.getParent().getId());
+				System.err.println("in RenderFXML " + p.getId());
 				String headId = "-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
 				Line head = (Line) g.lookup(headId);
 				if (head == null) {
 					Line h = new Line();
 					GridPane.setConstraints(h, p.getHeadColumn(), p.getHeadRow(), 1, 1, p.getHeadHPos(), p.getHeadVPos());
+					h.setId(headId);
 					head = h;
 				}
+				head.startXProperty().bind(p.xProperty());
+//				p.xProperty().bind(head.startXProperty());  // you can't do both
 				String tailId = "-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
 				System.out.println(headId);
 			}
