@@ -11,11 +11,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.geometry.Bounds;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import myE4Package.Pipe;
 
 public class RenderFXML extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		
+//		ObjectBinding<Bounds> boundsInSceneBindingHead;
+		ObjectBinding<Bounds> boundsInSceneBindingTail;
+		
+		List<Line> alist = new ArrayList<Line>();
+		List<Pipe> pipeList = new ArrayList<Pipe>();
+		
 		GridPane root = null;
 		try {
 			root = (GridPane) FXMLLoader.load(getClass().getResource("test.fxml"));
@@ -39,6 +52,7 @@ public class RenderFXML extends Application {
 			}
 			if (child instanceof Pipe) {
 				Pipe p = (Pipe) child;
+				pipeList.add(p);
 				System.out.println("parent = " + p.getParent().getId());
 				System.err.println("in RenderFXML " + p.getId());
 				String headId = "#-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
@@ -53,6 +67,7 @@ public class RenderFXML extends Application {
 					h.setId(headId);
 					head = h;
 				}
+				alist.add(head);
 //				head.startXProperty().bind(p.xProperty());
 				System.out.println(head);
 				p.xProperty().bind(head.startXProperty());  // you can't do both
@@ -65,13 +80,35 @@ public class RenderFXML extends Application {
 				System.out.println("tail = " + boundsInSceneTail);
 				System.out.println("head = " + boundsInSceneHead);
 				p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+				
+				final Line line = head;
+				
+				ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+					Bounds nodeLocal = line.getBoundsInLocal();
+					Bounds nodeScene = line.localToScene(nodeLocal);
+					return nodeScene;
+				}, head.boundsInLocalProperty());
 //				p.widthProperty().bind(boundsInSceneHead.subtract(head.layoutXProperty()));
 
 				System.out.println(headId);
 				System.out.println(tailId);
 			}
-		});
+		}
+		);
+		Line tempLine = new Line();
+		alist.add(tempLine);
+		System.out.println(alist);
+		System.out.println(alist.size());
+		final List<Line> imlist = Collections.unmodifiableList(alist);
+		System.out.println(imlist.get(0));
 		
+		ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+			Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
+			Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
+			return nodeScene;
+		}, imlist.get(0).boundsInLocalProperty());
+		
+		pipeList.get(0).widthProperty().bind(Bindings.createDoubleBinding(() -> boundsInSceneBindingHead.get().getMinX(), boundsInSceneBindingHead));
 		
 //		Scene scene = new Scene(root, 600, 600);
 		
