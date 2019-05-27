@@ -105,10 +105,16 @@ public class RenderFXML extends Application {
 		ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
 			Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
 			Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
+			System.out.println(nodeScene.toString());
 			return nodeScene;
-		}, imlist.get(0).boundsInLocalProperty());
+		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());
 		
-		pipeList.get(0).widthProperty().bind(Bindings.createDoubleBinding(() -> boundsInSceneBindingHead.get().getMinX(), boundsInSceneBindingHead));
+		pipeList.get(0).widthProperty().bind(Bindings.createDoubleBinding(
+				() -> { double test = boundsInSceneBindingHead.get().getMinX() - 400.0;
+				System.out.println(test);
+				return test;
+				},
+				boundsInSceneBindingHead));
 		
 //		Scene scene = new Scene(root, 600, 600);
 		
