@@ -19,6 +19,9 @@ import java.util.Collections;
 import myE4Package.Pipe;
 
 public class RenderFXML extends Application {
+	
+	private ObjectBinding<Bounds> boundsInSceneBindingHead;
+	List<Line> imlist;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -83,11 +86,11 @@ public class RenderFXML extends Application {
 				
 				final Line line = head;
 				
-				ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
-					Bounds nodeLocal = line.getBoundsInLocal();
-					Bounds nodeScene = line.localToScene(nodeLocal);
-					return nodeScene;
-				}, head.boundsInLocalProperty());
+//				ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+//					Bounds nodeLocal = line.getBoundsInLocal();
+//					Bounds nodeScene = line.localToScene(nodeLocal);
+//					return nodeScene;
+//				}, head.boundsInLocalProperty());
 //				p.widthProperty().bind(boundsInSceneHead.subtract(head.layoutXProperty()));
 
 				System.out.println(headId);
@@ -99,19 +102,37 @@ public class RenderFXML extends Application {
 		alist.add(tempLine);
 		System.out.println(alist);
 		System.out.println(alist.size());
-		final List<Line> imlist = Collections.unmodifiableList(alist);
+		imlist = Collections.unmodifiableList(alist);
 		System.out.println(imlist.get(0));
 		
-		ObjectBinding<Bounds> boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+
+		boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
 			Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
 			Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
-			System.out.println(nodeScene.toString());
+//			Bounds nodeScene = imlist.get(0).getLocalToSceneTransform().impl_apply(Affine3D);
+			System.out.println("1 " + nodeScene.toString());
 			return nodeScene;
-		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());
+		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
+
+		boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+			Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
+			Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
+			System.out.println("2nd " + nodeScene.toString());
+			return nodeScene;
+		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
+
 		
 		pipeList.get(0).widthProperty().bind(Bindings.createDoubleBinding(
 				() -> { double test = boundsInSceneBindingHead.get().getMinX() - 400.0;
 				System.out.println(test);
+				
+				boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+					Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
+					Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
+					System.out.println("XXX " + nodeScene.toString());
+					return nodeScene;
+				}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
+				
 				return test;
 				},
 				boundsInSceneBindingHead));
