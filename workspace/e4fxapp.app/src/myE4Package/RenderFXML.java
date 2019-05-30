@@ -1,6 +1,6 @@
 package myE4Package;
 
-import java.awt.Rectangle;
+//import java.awt.Rectangle;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -17,10 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import myE4Package.Pipe;
+import javafx.scene.shape.Rectangle;
 
 public class RenderFXML extends Application {
 	
 	private ObjectBinding<Bounds> boundsInSceneBindingHead;
+	int count = 0;
+	ObjectBinding<Bounds>[] myarray = new ObjectBinding[100];
 	List<Line> imlist;
 
 	@Override
@@ -113,29 +116,33 @@ public class RenderFXML extends Application {
 			System.out.println("1 " + nodeScene.toString());
 			return nodeScene;
 		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
-
-		boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+		System.out.println("before " + myarray[count]);
+		myarray[count] = Bindings.createObjectBinding(() -> {
 			Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
 			Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
-			System.out.println("2nd " + nodeScene.toString());
+			System.out.println(count + " 2nd " + nodeScene.toString());
 			return nodeScene;
 		}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
-
+		System.out.println("after " + myarray[0]);
 		
 		pipeList.get(0).widthProperty().bind(Bindings.createDoubleBinding(
-				() -> { double test = boundsInSceneBindingHead.get().getMinX() - 400.0;
+				() -> { double test = myarray[count].get().getMinX() - 400.0;
 				System.out.println(test);
+				count++;
+				System.out.println("after count increment " + count);
 				
-				boundsInSceneBindingHead = Bindings.createObjectBinding(() -> {
+				myarray[count] = Bindings.createObjectBinding(() -> {
 					Bounds nodeLocal = imlist.get(0).getBoundsInLocal();
 					Bounds nodeScene = imlist.get(0).localToScene(nodeLocal);
-					System.out.println("XXX " + nodeScene.toString());
+					System.out.println(count + " XXX " + nodeScene.toString());
 					return nodeScene;
 				}, imlist.get(0).boundsInLocalProperty(), imlist.get(0).localToSceneTransformProperty());		
-				
+				System.out.println("after second binding " + myarray[count]);
 				return test;
 				},
 				boundsInSceneBindingHead));
+		
+		System.out.println("end " + myarray[0]);
 		
 //		Scene scene = new Scene(root, 600, 600);
 		
