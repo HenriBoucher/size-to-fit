@@ -1,6 +1,7 @@
 package myE4Package;
 
 import javax.annotation.PostConstruct;
+import java.lang.Override;
 import javax.inject.Inject;
 
 import javafx.beans.property.DoubleProperty;
@@ -101,7 +102,10 @@ public class Pipe extends Rectangle {
 //		System.out.println("gridpane = " + gridpane);
 		System.err.println("in constructor");
 	}
-		
 	
-
+//	@Override
+//	protected void layoutChildren() {
+//		super.layoutChildren();
+//		System.out.println("special layoutChildren code");
+//	}
 }

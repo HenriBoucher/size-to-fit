@@ -40,12 +40,12 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
-	scene.widthProperty().addListener(new ChangeListener<Number>() {
+	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 	        System.out.println("Width: " + newSceneWidth);
 	    }
 	});
-	scene.heightProperty().addListener(new ChangeListener<Number>() {
+	root.heightProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
 	        System.out.println("Height: " + newSceneHeight);
 	    }
