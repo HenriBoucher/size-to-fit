@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Collections;
 import myE4Package.Pipe;
 import javafx.scene.shape.Rectangle;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ChangeListener;
 
 
 public class Pane extends Application {
@@ -38,6 +40,16 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
+	scene.widthProperty().addListener(new ChangeListener<Number>() {
+	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+	        System.out.println("Width: " + newSceneWidth);
+	    }
+	});
+	scene.heightProperty().addListener(new ChangeListener<Number>() {
+	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+	        System.out.println("Height: " + newSceneHeight);
+	    }
+	});
 	}
 
 }
