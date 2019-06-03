@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.control.TextField;
 
 public class Pipe extends Rectangle {
 	
@@ -70,32 +71,11 @@ public class Pipe extends Rectangle {
     public final void setTailColumn(int value) {tailColumn.set(value);}
     public IntegerProperty tailColumnProperty() {return headRow;}
     
-    
-	@PostConstruct
-	public void setHeadTail () {
-		Integer headColumn = this.getHeadColumn();
-		Integer headRow = this.getHeadRow();
-		String headId = "-pipe-" + headColumn + "-" + this.getHeadHPos()
-				+ "-" + headRow + "-" + this.getHeadVPos();
-		System.err.println("built string " + headId);
-		Node head = super.lookup(headId);
-		if ( head == null ){ 
-			head = new Line(10, 10, 100, 100);
-			GridPane gridpane = (GridPane) getParent();
-			gridpane.getChildren().add(new Button());
-//			this.getParent().getChildrenUnmodifiable().add(head);
-		
-		System.out.println("In Pipe " + headId);
-		}
-		
-//		Node tail = super.lookup("1RIGHT1CENTER");
-	}
-	
 	public Pipe() {	
 		super();
 		
-		this.setFill(Color.RED);
-		this.setArcHeight(100);
+//		this.setFill(Color.RED);
+//		this.setArcHeight(100);
 		System.out.println("Parent = " + this);
 		System.out.println("scene = " + scene);
 //		GridPane gridpane = (GridPane) scene.lookup("gridpane");
