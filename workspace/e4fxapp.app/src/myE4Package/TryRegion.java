@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.geometry.Bounds;
@@ -21,8 +23,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 
 
-public class Pane extends Application {
-	
+public class TryRegion extends Application {
+
 	@Override
 	public void start(Stage primaryStage) {
 	GridPane root = null;
@@ -36,20 +38,29 @@ public class Pane extends Application {
 		e.printStackTrace();
 	}
 	
+	System.out.println("In TryRegion.");
+	
+	Region myRegion = new Region();
+	myRegion.setMinWidth(100);
+	myRegion.setMinHeight(50);
+	Pipe myPipe = new Pipe();
+	myPipe.setWidth(200);
+	myPipe.setHeight(20);
+	myPipe.setFill(Color.RED);
+	myPipe.setPercentWidth(10);
+	System.out.println("--- " + myPipe);
+	myRegion.setShape(myPipe);
+	GridPane.setRowIndex(myRegion, 1);
+	GridPane.setColumnIndex(myRegion, 1);
+	System.out.println("width " + myRegion.getWidth());
+	System.out.println("height " + myRegion.getHeight());
+//	root.getChildren().add(myRegion);
+	
 	Scene scene = new Scene(root, 600, 600);
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
-	root.widthProperty().addListener(new ChangeListener<Number>() {
-	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-	        System.out.println("Width: " + newSceneWidth);
-	    }
-	});
-	root.heightProperty().addListener(new ChangeListener<Number>() {
-	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-	        System.out.println("Height: " + newSceneHeight);
-	    }
-	});
+	
 	}
 	public static void main(String[] args) {
 		launch(args);
