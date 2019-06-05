@@ -20,9 +20,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 
-
 public class Pane extends Application {
-	
+	Pipe p = new Pipe();
+	Line head = new Line();
+	Line tail = new Line();
 	@Override
 	public void start(Stage primaryStage) {
 	GridPane root = null;
@@ -40,9 +41,25 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
+
+	
+	root.getChildren().forEach(child -> {
+		if (child instanceof Pipe) {
+			p = (Pipe) child;
+			String headId = "#-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
+			head = (Line) scene.lookup(headId);
+			String tailId = "#-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
+			tail = (Line) scene.lookup(tailId);
+	}
+	});
+	
+	
 	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 	        System.out.println("Width: " + newSceneWidth);
+	        Bounds boundsInSceneTail = tail.localToScene(tail.getBoundsInLocal());
+			Bounds boundsInSceneHead = head.localToScene(head.getBoundsInLocal());
+			p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
 	    }
 	});
 	root.heightProperty().addListener(new ChangeListener<Number>() {
