@@ -21,6 +21,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 
 public class Pane extends Application {
+	class internalPipe {
+		Pipe p;
+		Line head;
+		Line tail;
+	}
+	internalPipe[] pipeArray = new internalPipe[100];
+	int pipeIndex = 0;
 	Pipe p = new Pipe();
 	Line head = new Line();
 	Line tail = new Line();
@@ -46,10 +53,33 @@ public class Pane extends Application {
 	root.getChildren().forEach(child -> {
 		if (child instanceof Pipe) {
 			p = (Pipe) child;
-			String headId = "#-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
-			head = (Line) scene.lookup(headId);
-			String tailId = "#-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
-			tail = (Line) scene.lookup(tailId);
+			pipeArray[pipeIndex].p = p;
+			
+			String headId = "-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
+			head = (Line) scene.lookup("#" + headId);
+			if (head == null) {
+				head = new Line();
+				head.setId(headId);
+				GridPane.setColumnIndex(head, p.getHeadColumn());
+				GridPane.setHalignment(head, p.getHeadHPos());
+				GridPane.setRowIndex(head, p.getHeadRow());
+				GridPane.setValignment(head, p.getHeadVPos());
+			}
+			pipeArray[pipeIndex].head = head;
+
+			String tailId = "-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
+			tail = (Line) scene.lookup("#" + tailId);
+			if (tail == null) {
+				tail = new Line();
+				tail.setId(headId);
+				GridPane.setColumnIndex(tail, p.getTailColumn());
+				GridPane.setHalignment(tail, p.getTailHPos());
+				GridPane.setRowIndex(tail, p.getTailRow());
+				GridPane.setValignment(tail, p.getTailVPos());
+			}
+			pipeArray[pipeIndex].tail = tail;
+			
+			pipeIndex++;
 	}
 	});
 	
