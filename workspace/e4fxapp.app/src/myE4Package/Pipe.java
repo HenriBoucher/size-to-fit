@@ -74,18 +74,5 @@ public class Pipe extends Rectangle {
 	public Pipe() {	
 		super();
 		
-//		this.setFill(Color.RED);
-//		this.setArcHeight(100);
-		System.out.println("Parent = " + this);
-		System.out.println("scene = " + scene);
-//		GridPane gridpane = (GridPane) scene.lookup("gridpane");
-//		System.out.println("gridpane = " + gridpane);
-		System.err.println("in constructor");
 	}
-	
-//	@Override
-//	protected void layoutChildren() {
-//		super.layoutChildren();
-//		System.out.println("special layoutChildren code");
-//	}
 }
