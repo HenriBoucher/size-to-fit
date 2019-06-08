@@ -19,6 +19,7 @@ import myE4Package.Pipe;
 import javafx.scene.shape.Rectangle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.Parent;
 
 public class Pane extends Application {
 	class InternalPipe {
@@ -44,11 +45,9 @@ public class Pane extends Application {
 		e.printStackTrace();
 	}
 	
-	Scene scene = new Scene(root, 600, 600);
+	final Scene scene = new Scene(root, 600, 600);
 	primaryStage.setScene(scene);
 	primaryStage.show();
-	
-
 	
 	root.getChildren().forEach(child -> {
 		if (child instanceof Pipe) {
@@ -80,6 +79,7 @@ public class Pane extends Application {
 			}
 			pipeArray[pipeIndex].tail = tail;
 			
+			//TODO must handle array resize
 			pipeIndex++;
 	}
 	});
@@ -88,20 +88,32 @@ public class Pane extends Application {
 		root.getChildren().addAll(pipeArray[i].head, pipeArray[i].tail);
 	}
 	
+	processAnchors();
+	
 	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 	        System.out.println("Width: " + newSceneWidth);
-	        Bounds boundsInSceneTail = tail.localToScene(tail.getBoundsInLocal());
-			Bounds boundsInSceneHead = head.localToScene(head.getBoundsInLocal());
-			p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+	        processAnchors();
 	    }
 	});
 	root.heightProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
 	        System.out.println("Height: " + newSceneHeight);
+	        processAnchors();
 	    }
 	});
+	
 	}
+	
+	void processAnchors(){
+		for (int i = 0; i < pipeIndex; i++) {
+			System.out.println("i in processAnchors = " + i);
+	        Bounds boundsInSceneTail = tail.localToScene(tail.getBoundsInLocal());
+			Bounds boundsInSceneHead = head.localToScene(head.getBoundsInLocal());
+			p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+		}
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
