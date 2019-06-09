@@ -22,16 +22,22 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 
 public class Pane extends Application {
+	
 	class InternalPipe {
 		Pipe p;
 		Line head;
 		Line tail;
 	}
-	InternalPipe[] pipeArray = new InternalPipe[100];
+	
+	int pipeArraySize = 2;
+	int lineArraySize = 2;
+	final int arrayIncrement = 2;
+	InternalPipe[] pipeArray = new InternalPipe[pipeArraySize];
+	Line[] lineArray = new Line[lineArraySize];
+	
 	int pipeIndex = 0;
-	Pipe p = new Pipe();
-	Line head = new Line();
-	Line tail = new Line();
+	int lineIndex = 0;
+	
 	@Override
 	public void start(Stage primaryStage) {
 	GridPane root = null;
@@ -51,12 +57,12 @@ public class Pane extends Application {
 	
 	root.getChildren().forEach(child -> {
 		if (child instanceof Pipe) {
-			p = (Pipe) child;
+			Pipe p = (Pipe) child;
 			pipeArray[pipeIndex] = new InternalPipe();
 			pipeArray[pipeIndex].p = p;
 			
 			String headId = "-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
-			head = (Line) scene.lookup("#" + headId);
+			Line head = (Line) scene.lookup("#" + headId);
 			if (head == null) {
 				head = new Line();
 				head.setId(headId);
@@ -64,29 +70,60 @@ public class Pane extends Application {
 				GridPane.setHalignment(head, p.getHeadHPos());
 				GridPane.setRowIndex(head, p.getHeadRow());
 				GridPane.setValignment(head, p.getHeadVPos());
-			}
+				lineArray[lineIndex++] = head;
+				if (lineIndex == lineArraySize) {
+					Line[] tempLineArray = new Line[lineArraySize + arrayIncrement];
+					System.arraycopy(lineArray, 0, tempLineArray, 0, lineArraySize);
+					lineArray = tempLineArray;
+					lineArraySize = lineArray.length;
+				}
+			} 
 			pipeArray[pipeIndex].head = head;
 
 			String tailId = "-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
-			tail = (Line) scene.lookup("#" + tailId);
+			Line tail = (Line) scene.lookup("#" + tailId);
 			if (tail == null) {
 				tail = new Line();
-				tail.setId(headId);
+				tail.setId(tailId );
 				GridPane.setColumnIndex(tail, p.getTailColumn());
 				GridPane.setHalignment(tail, p.getTailHPos());
 				GridPane.setRowIndex(tail, p.getTailRow());
 				GridPane.setValignment(tail, p.getTailVPos());
+				lineArray[lineIndex++] = tail;
+				if (lineIndex == lineArraySize) {
+					Line[] tempLineArray = new Line[lineArraySize + arrayIncrement];
+					System.arraycopy(lineArray, 0, tempLineArray, 0, lineArraySize);
+					lineArray = tempLineArray;
+					lineArraySize = lineArray.length;
+				}
 			}
 			pipeArray[pipeIndex].tail = tail;
 			
 			//TODO must handle array resize
 			pipeIndex++;
+			if (pipeIndex == pipeArraySize) {
+				System.out.println("pipeIndex " + pipeIndex + " arraySize " + pipeArraySize);
+				InternalPipe[] tempPipeArray = new InternalPipe[pipeArraySize + arrayIncrement];
+				System.arraycopy(pipeArray, 0, tempPipeArray, 0, pipeArraySize);
+				pipeArray = tempPipeArray;
+				pipeArraySize = pipeArray.length;
+				for (int i = 0; i < pipeIndex; i++) {
+					System.out.println("int = " + i + " tailId = " + pipeArray[i].tail + " headId = " + pipeArray[i].head);					
+				}
+			}
 	}
 	});
 	
-	for (int i = 0; i < pipeIndex; i++) {
-		root.getChildren().addAll(pipeArray[i].head, pipeArray[i].tail);
+	for (int i = 0; i < lineIndex; i++) {
+		root.getChildren().add(lineArray[i]);
+		System.out.println("adding line " + lineArray[i]);
 	}
+	root.requestLayout();
+	
+	String mystring = "-pipe-1-LEFT-1-CENTER";
+	Line test = (Line) scene.lookup("#" + mystring );
+
+	System.out.println("~~~~~~~~~~~~~~ " + test);
 	
 	processAnchors();
 	
@@ -105,14 +142,15 @@ public class Pane extends Application {
 	
 	}
 	
+	
 	void processAnchors(){
 		for (int i = 0; i < pipeIndex; i++) {
-			System.out.println("i in processAnchors = " + i);
-	        Bounds boundsInSceneTail = tail.localToScene(tail.getBoundsInLocal());
-			Bounds boundsInSceneHead = head.localToScene(head.getBoundsInLocal());
-			p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+			System.out.println("i in processAnchors = " + i + " tail = " + pipeArray[i].tail);
+	        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
+			Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
+			pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
 		}
-	}
+}
 	
 	public static void main(String[] args) {
 		launch(args);
