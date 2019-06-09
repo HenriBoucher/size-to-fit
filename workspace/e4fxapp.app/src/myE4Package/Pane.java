@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.geometry.Bounds;
@@ -15,6 +16,8 @@ import javafx.beans.binding.ObjectBinding;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import myE4Package.Pipe;
 import javafx.scene.shape.Rectangle;
 import javafx.beans.value.ObservableValue;
@@ -22,21 +25,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 
 public class Pane extends Application {
-	
+
 	class InternalPipe {
 		Pipe p;
 		Line head;
 		Line tail;
 	}
 	
+	HashMap <String, Line> anchorLines = new HashMap<String, Line>();
+	
 	int pipeArraySize = 2;
-	int lineArraySize = 2;
 	final int arrayIncrement = 2;
 	InternalPipe[] pipeArray = new InternalPipe[pipeArraySize];
-	Line[] lineArray = new Line[lineArraySize];
 	
 	int pipeIndex = 0;
-	int lineIndex = 0;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -62,7 +64,7 @@ public class Pane extends Application {
 			pipeArray[pipeIndex].p = p;
 			
 			String headId = "-pipe-" + p.getHeadColumn() + "-" + p.getHeadHPos() + "-" + p.getHeadRow() + "-" + p.getHeadVPos();
-			Line head = (Line) scene.lookup("#" + headId);
+			Line head = anchorLines.get(headId);
 			if (head == null) {
 				head = new Line();
 				head.setId(headId);
@@ -70,18 +72,14 @@ public class Pane extends Application {
 				GridPane.setHalignment(head, p.getHeadHPos());
 				GridPane.setRowIndex(head, p.getHeadRow());
 				GridPane.setValignment(head, p.getHeadVPos());
-				lineArray[lineIndex++] = head;
-				if (lineIndex == lineArraySize) {
-					Line[] tempLineArray = new Line[lineArraySize + arrayIncrement];
-					System.arraycopy(lineArray, 0, tempLineArray, 0, lineArraySize);
-					lineArray = tempLineArray;
-					lineArraySize = lineArray.length;
-				}
+				anchorLines.put(headId, head);
+				head.setStrokeWidth(5);
+				head.setStroke(Color.RED);
 			} 
 			pipeArray[pipeIndex].head = head;
 
 			String tailId = "-pipe-" + p.getTailColumn() + "-" + p.getTailHPos() + "-" + p.getTailRow() + "-" + p.getTailVPos();
-			Line tail = (Line) scene.lookup("#" + tailId);
+			Line tail = anchorLines.get(tailId);
 			if (tail == null) {
 				tail = new Line();
 				tail.setId(tailId );
@@ -89,54 +87,56 @@ public class Pane extends Application {
 				GridPane.setHalignment(tail, p.getTailHPos());
 				GridPane.setRowIndex(tail, p.getTailRow());
 				GridPane.setValignment(tail, p.getTailVPos());
-				lineArray[lineIndex++] = tail;
-				if (lineIndex == lineArraySize) {
-					Line[] tempLineArray = new Line[lineArraySize + arrayIncrement];
-					System.arraycopy(lineArray, 0, tempLineArray, 0, lineArraySize);
-					lineArray = tempLineArray;
-					lineArraySize = lineArray.length;
-				}
-			}
+				anchorLines.put(tailId, tail);
+				tail.setStrokeWidth(5);
+				tail.setStroke(Color.BLUE);
+ 			}
 			pipeArray[pipeIndex].tail = tail;
 			
-			//TODO must handle array resize
+			//handle array resize
 			pipeIndex++;
 			if (pipeIndex == pipeArraySize) {
-				System.out.println("pipeIndex " + pipeIndex + " arraySize " + pipeArraySize);
 				InternalPipe[] tempPipeArray = new InternalPipe[pipeArraySize + arrayIncrement];
 				System.arraycopy(pipeArray, 0, tempPipeArray, 0, pipeArraySize);
 				pipeArray = tempPipeArray;
 				pipeArraySize = pipeArray.length;
-				for (int i = 0; i < pipeIndex; i++) {
-					System.out.println("int = " + i + " tailId = " + pipeArray[i].tail + " headId = " + pipeArray[i].head);					
-				}
 			}
 	}
 	});
 	
-	for (int i = 0; i < lineIndex; i++) {
-		root.getChildren().add(lineArray[i]);
-		System.out.println("adding line " + lineArray[i]);
+	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
+		root.getChildren().add(entry.getValue());
+		System.out.print(entry.getKey());
+		System.out.println(" " + entry.getValue().localToScene(entry.getValue().getBoundsInLocal()));
 	}
+	
 	root.requestLayout();
 	
-	String mystring = "-pipe-1-LEFT-1-CENTER";
-	Line test = (Line) scene.lookup("#" + mystring );
+	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
+//		root.getChildren().add(entry.getValue());
+		System.out.print(entry.getKey());
+		System.out.println(" " + entry.getValue().localToScene(entry.getValue().getBoundsInLocal()));
+	}
 
-	System.out.println("~~~~~~~~~~~~~~ " + test);
-	
-	processAnchors();
+		
+//	processAnchors();
 	
 	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-	        System.out.println("Width: " + newSceneWidth);
-	        processAnchors();
+//	        System.out.println("Width: " + newSceneWidth);
+//	        processAnchors();
+	    	//TODO trig functions to set width, height and angle 
+			for (int i = 0; i < pipeIndex; i++) {
+		        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
+				Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
+				pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+			}
 	    }
 	});
 	root.heightProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-	        System.out.println("Height: " + newSceneHeight);
-	        processAnchors();
+//	        System.out.println("Height: " + newSceneHeight);
+//	        processAnchors();
 	    }
 	});
 	
@@ -145,7 +145,6 @@ public class Pane extends Application {
 	
 	void processAnchors(){
 		for (int i = 0; i < pipeIndex; i++) {
-			System.out.println("i in processAnchors = " + i + " tail = " + pipeArray[i].tail);
 	        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
 			Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
 			pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
@@ -155,5 +154,5 @@ public class Pane extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 }
