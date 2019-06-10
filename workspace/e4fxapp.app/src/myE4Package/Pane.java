@@ -23,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
+import javafx.geometry.Bounds;
 
 public class Pane extends Application {
 
@@ -103,40 +104,30 @@ public class Pane extends Application {
 			}
 	}
 	});
-	
+	Line lastLine = new Line();
 	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
 		root.getChildren().add(entry.getValue());
+		lastLine = entry.getValue();
 		System.out.print(entry.getKey());
 		System.out.println(" " + entry.getValue().localToScene(entry.getValue().getBoundsInLocal()));
 	}
+	lastLine.layoutXProperty().addListener(new ChangeListener<Number>() {
+		@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldLayoutX, Number newLayoutX) {
+			processAnchors();
+		}
+	});
 	
-	root.requestLayout();
-	
-	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
-//		root.getChildren().add(entry.getValue());
-		System.out.print(entry.getKey());
-		System.out.println(" " + entry.getValue().localToScene(entry.getValue().getBoundsInLocal()));
-	}
-
-		
-//	processAnchors();
 	
 	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
 //	        System.out.println("Width: " + newSceneWidth);
-//	        processAnchors();
-	    	//TODO trig functions to set width, height and angle 
-			for (int i = 0; i < pipeIndex; i++) {
-		        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
-				Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
-				pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
-			}
+	        processAnchors();
 	    }
 	});
 	root.heightProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
 //	        System.out.println("Height: " + newSceneHeight);
-//	        processAnchors();
+	        processAnchors();
 	    }
 	});
 	
