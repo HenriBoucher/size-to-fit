@@ -120,25 +120,29 @@ public class Pane extends Application {
 	
 	root.widthProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-//	        System.out.println("Width: " + newSceneWidth);
+	        System.out.println("Width: " + newSceneWidth);
 	        processAnchors();
 	    }
 	});
 	root.heightProperty().addListener(new ChangeListener<Number>() {
 	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-//	        System.out.println("Height: " + newSceneHeight);
+	        System.out.println("Height: " + newSceneHeight);
 	        processAnchors();
 	    }
 	});
 	
 	}
-	
-	
+
 	void processAnchors(){
 		for (int i = 0; i < pipeIndex; i++) {
 	        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
 			Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
 			pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+			if (i == 0) {
+				System.out.println(" boundsInSceneTail " + boundsInSceneTail);
+				System.out.println(" boundsInSceneHead " + boundsInSceneHead);
+			}
+
 		}
 }
 	
