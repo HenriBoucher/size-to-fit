@@ -1,4 +1,7 @@
 package myE4Package;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 /*
  * You must adjust the width of the window for the rectangle to appear.
  * After the rectangle is drawn note that adjusting the window width adjusts
@@ -17,6 +20,7 @@ package myE4Package;
 import javafx.application.Application;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -28,6 +32,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.geometry.Bounds;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
 import javafx.beans.value.ChangeListener;
 
 public class MyTest extends Application {
@@ -40,12 +45,33 @@ public class MyTest extends Application {
 	public void start(Stage primaryStage) {
 		
 		primaryStage.setTitle("MyTest");
-		GridPane root = new GridPane();
+//		GridPane root = new GridPane();
+		GridPane root = null;
+		try {
+			root = (GridPane) FXMLLoader.load(getClass().getResource("gridpane.fxml"));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		root.setAlignment(Pos.CENTER);
 
-		ColumnConstraints column1 = new ColumnConstraints();
-		column1.setHgrow(Priority.ALWAYS);
-		root.getColumnConstraints().add(column1);
+
+//		ColumnConstraints column1 = new ColumnConstraints();
+//		column1.setHgrow(Priority.SOMETIMES);
+//		root.getColumnConstraints().add(column1);
+//		
+//		RowConstraints row1 = new RowConstraints();
+//		row1.setMinHeight(10.0);
+//		row1.setPrefHeight(30.0);
+//		row1.setVgrow(Priority.SOMETIMES);
+//		root.getRowConstraints().add(row1);
+		
+		System.out.println("col = " + root.getRowConstraints());
+		System.out.println("row = " + root.getColumnConstraints());
 		
 		GridPane.setHalignment(head, HPos.RIGHT);
 		GridPane.setValignment(head, VPos.CENTER);
