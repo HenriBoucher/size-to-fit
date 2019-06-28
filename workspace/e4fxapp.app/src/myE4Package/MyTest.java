@@ -45,33 +45,35 @@ public class MyTest extends Application {
 	public void start(Stage primaryStage) {
 		
 		primaryStage.setTitle("MyTest");
-//		GridPane root = new GridPane();
-		GridPane root = null;
-		try {
-			root = (GridPane) FXMLLoader.load(getClass().getResource("gridpane.fxml"));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GridPane root = new GridPane();
+//		GridPane root = null;
+//		try {
+//			root = (GridPane) FXMLLoader.load(getClass().getResource("gpnoconstraints.fxml"));
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		root.setAlignment(Pos.CENTER);
 
 
-//		ColumnConstraints column1 = new ColumnConstraints();
-//		column1.setHgrow(Priority.SOMETIMES);
-//		root.getColumnConstraints().add(column1);
-//		
+		ColumnConstraints column1 = new ColumnConstraints();
+		column1.setMinWidth(10.0);
+//		column1.setPrefWidth(100.0);
+		column1.setHgrow(Priority.ALWAYS);
+		root.getColumnConstraints().add(column1);
+		
 //		RowConstraints row1 = new RowConstraints();
 //		row1.setMinHeight(10.0);
 //		row1.setPrefHeight(30.0);
 //		row1.setVgrow(Priority.SOMETIMES);
 //		root.getRowConstraints().add(row1);
 		
-		System.out.println("col = " + root.getRowConstraints());
-		System.out.println("row = " + root.getColumnConstraints());
+		System.out.println("row = " + root.getRowConstraints());
+		System.out.println("col = " + root.getColumnConstraints());
 		
 		GridPane.setHalignment(head, HPos.RIGHT);
 		GridPane.setValignment(head, VPos.CENTER);
