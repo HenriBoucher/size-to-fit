@@ -96,14 +96,21 @@ public class MyTest extends Application {
 		
 		root.getChildren().addAll(head, tail, pipe);
 		
-		root.widthProperty().addListener(new ChangeListener<Number>() {
-			@Override public void changed(ObservableValue<? extends Number> 
-					observableValue, Number oldX, Number newX) {
-				System.out.println("newX = " + newX);
-				processAnchors();
-			}
-		});
-	
+//		root.widthProperty().addListener(new ChangeListener<Number>() {
+//			@Override public void changed(ObservableValue<? extends Number> 
+//					observableValue, Number oldX, Number newX) {
+//				System.out.println("newX = " + newX);
+//				processAnchors();
+//			}
+//		});
+
+		head.layoutXProperty().addListener(c -> { 
+//		    Bounds bHead = head.localToScene(head.getBoundsInLocal()); 
+//		    Bounds bTail = tail.localToScene(tail.getBoundsInLocal()); 
+//		    pipe.setWidth(bHead.getMinX() - bTail.getMaxX() - 50); 
+			processAnchors();
+		}); 
+		
 		primaryStage.setScene(new Scene(root, 300, 250));
 		primaryStage.show();
 	}
