@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -33,6 +34,7 @@ public class Pane extends Application {
 		Pipe p;
 		Line head;
 		Line tail;
+		VBox vbox;
 	}
 	
 	HashMap <String, Line> anchorLines = new HashMap<String, Line>();
@@ -60,6 +62,23 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
+	// create a VBox for each cell in the grid so we can get height and width of a grid
+	int col = root.getColumnConstraints().size();
+	int row = root.getRowConstraints().size();
+	VBox vboxArray[][] = new VBox[col][row]; 
+	for (int i = 0; i < col; i++) {
+		for (int j = 0; j < row; j++) {
+			VBox vbox = new VBox();
+			vbox.setFillWidth(true);
+			vbox.setStyle("-fx-background-color: rgba(0, 255, 255, 0.5);");
+			GridPane.setColumnIndex(vbox, i);
+			GridPane.setRowIndex(vbox, j);
+			root.getChildren().add(vbox);
+			vboxArray[i][j] = vbox;
+		}
+	}
+
+	// create all of the anchors
 	root.getChildren().forEach(child -> {
 		if (child instanceof Pipe) {
 			Pipe p = (Pipe) child;
@@ -104,7 +123,7 @@ public class Pane extends Application {
 			}
 	}
 	});
-
+	
 	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
 		root.getChildren().add(entry.getValue());
 	}
@@ -128,11 +147,17 @@ public class Pane extends Application {
 	
 	}
 
+	// adjust pipes 
 	void processAnchors(){
 		for (int i = 0; i < pipeIndex; i++) {
-	        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
-			Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
-			pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
+			Pipe p = pipeArray[i].p;
+			Line head = pipeArray[i].head;
+			Line tail = pipeArray[i].tail;
+			
+	        Bounds sceneTail = tail.localToScene(tail.getBoundsInLocal());
+			Bounds sceneHead = head.localToScene(head.getBoundsInLocal());
+			p.setWidth(sceneHead.getMinX() - sceneTail.getMinX());
+//			p.setHeight(p.getPercentWidth()/100 * p.getHeadRow());
 		}
 }
 	
