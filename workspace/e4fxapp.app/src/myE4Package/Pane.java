@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.geometry.Bounds;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import java.util.ArrayList;
@@ -35,8 +37,8 @@ public class Pane extends Application {
 	
 	HashMap <String, Line> anchorLines = new HashMap<String, Line>();
 	
-	int pipeArraySize = 2;
-	final int arrayIncrement = 2;
+	int pipeArraySize = 100;
+	final int arrayIncrement = 50;
 	InternalPipe[] pipeArray = new InternalPipe[pipeArraySize];
 	
 	int pipeIndex = 0;
@@ -73,9 +75,8 @@ public class Pane extends Application {
 				GridPane.setHalignment(head, p.getHeadHPos());
 				GridPane.setRowIndex(head, p.getHeadRow());
 				GridPane.setValignment(head, p.getHeadVPos());
+				head.setStroke(Color.TRANSPARENT);
 				anchorLines.put(headId, head);
-				head.setStrokeWidth(5);
-				head.setStroke(Color.RED);
 			} 
 			pipeArray[pipeIndex].head = head;
 
@@ -88,9 +89,8 @@ public class Pane extends Application {
 				GridPane.setHalignment(tail, p.getTailHPos());
 				GridPane.setRowIndex(tail, p.getTailRow());
 				GridPane.setValignment(tail, p.getTailVPos());
+				tail.setStroke(Color.TRANSPARENT);
 				anchorLines.put(tailId, tail);
-				tail.setStrokeWidth(5);
-				tail.setStroke(Color.BLUE);
  			}
 			pipeArray[pipeIndex].tail = tail;
 			
@@ -104,32 +104,27 @@ public class Pane extends Application {
 			}
 	}
 	});
-	Line lastLine = new Line();
+
 	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
 		root.getChildren().add(entry.getValue());
-		lastLine = entry.getValue();
-		System.out.print(entry.getKey());
-		System.out.println(" " + entry.getValue().localToScene(entry.getValue().getBoundsInLocal()));
 	}
-	lastLine.layoutXProperty().addListener(new ChangeListener<Number>() {
-		@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldLayoutX, Number newLayoutX) {
-			processAnchors();
-		}
+	
+	// position line() in the bottom right corner for layout property changes
+	Line bottomRight = new Line();
+	GridPane.setColumnIndex(bottomRight, root.getColumnConstraints().size() - 1);
+	GridPane.setHalignment(bottomRight, HPos.RIGHT);
+	GridPane.setRowIndex(bottomRight, root.getRowConstraints().size() - 1);
+	GridPane.setValignment(bottomRight, VPos.BOTTOM);
+	bottomRight.setStroke(Color.TRANSPARENT);
+	root.getChildren().add(bottomRight);
+
+	bottomRight.layoutXProperty().addListener(c -> {
+		processAnchors();
+	});
+	bottomRight.layoutYProperty().addListener(c -> {
+		processAnchors();
 	});
 	
-	
-	root.widthProperty().addListener(new ChangeListener<Number>() {
-	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-	        System.out.println("Width: " + newSceneWidth);
-	        processAnchors();
-	    }
-	});
-	root.heightProperty().addListener(new ChangeListener<Number>() {
-	    @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-	        System.out.println("Height: " + newSceneHeight);
-	        processAnchors();
-	    }
-	});
 	
 	}
 
@@ -138,11 +133,6 @@ public class Pane extends Application {
 	        Bounds boundsInSceneTail = pipeArray[i].tail.localToScene(pipeArray[i].tail.getBoundsInLocal());
 			Bounds boundsInSceneHead = pipeArray[i].head.localToScene(pipeArray[i].head.getBoundsInLocal());
 			pipeArray[i].p.setWidth(boundsInSceneHead.getMinX() - boundsInSceneTail.getMinX());
-			if (i == 0) {
-				System.out.println(" boundsInSceneTail " + boundsInSceneTail);
-				System.out.println(" boundsInSceneHead " + boundsInSceneHead);
-			}
-
 		}
 }
 	
