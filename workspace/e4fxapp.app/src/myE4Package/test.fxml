@@ -16,11 +16,11 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Pipe id="pipe2" headColumn="1" headHPos="RIGHT" headRow="1" headVPos="CENTER" height="20.0" layoutX="100.0" layoutY="100.0" percentWidth="20.0" tailColumn="1" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Pipe headHPos="CENTER" headVPos="CENTER" height="20.0" percentWidth="20.0" tailHPos="LEFT" tailVPos="CENTER" width="100.0" />
-      <Pipe headHPos="CENTER" headRow="1" headVPos="CENTER" height="20.0" percentWidth="20.0" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" GridPane.rowIndex="1" />
-      <Pipe headHPos="CENTER" headRow="2" headVPos="TOP" height="20.0" percentWidth="20.0" rotate="90.0" tailHPos="CENTER" tailRow="2" tailVPos="CENTER" width="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Pipe headColumn="1" headHPos="CENTER" headRow="2" headVPos="CENTER" height="20.0" tailColumn="1" tailHPos="LEFT" tailRow="2" tailVPos="CENTER" width="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Pipe id="pipe2" headColumn="1" headHPos="RIGHT" headRow="1" headVPos="CENTER" height="20.0" percentWidth="20.0" tailColumn="1" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" />
+      <Pipe id="pipe1" headColumn="1" headHPos="RIGHT" headRow="1" headVPos="CENTER" height="20.0" layoutX="100.0" layoutY="100.0" percentWidth="20.0" tailColumn="1" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Pipe id="pipe2" headHPos="CENTER" headVPos="CENTER" height="20.0" percentWidth="20.0" tailHPos="LEFT" tailVPos="CENTER" width="100.0" />
+      <Pipe id="pipe3" headHPos="CENTER" headRow="1" headVPos="CENTER" height="20.0" percentWidth="20.0" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" GridPane.rowIndex="1" />
+      <Pipe id="pipe4" headHPos="CENTER" headRow="2" headVPos="TOP" height="20.0" percentWidth="20.0" rotate="90.0" tailHPos="CENTER" tailRow="2" tailVPos="CENTER" width="100.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Pipe id="pipe5" headColumn="1" headHPos="CENTER" headRow="2" headVPos="CENTER" height="20.0" tailColumn="1" tailHPos="LEFT" tailRow="2" tailVPos="CENTER" width="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Pipe id="pipe6" headColumn="1" headHPos="RIGHT" headRow="1" headVPos="CENTER" height="20.0" percentWidth="20.0" tailColumn="1" tailHPos="LEFT" tailRow="1" tailVPos="CENTER" width="100.0" x="100.0" y="100.0" />
    </children>
 </GridPane>
