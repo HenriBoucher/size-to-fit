@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -46,6 +47,9 @@ public class Pane extends Application {
 	
 	int pipeIndex = 0;
 	
+	VBox vboxCol[];
+	VBox vboxRow[];
+	
 	// only call processAnchors once at startup 
 	boolean starting = true;
 	
@@ -69,8 +73,8 @@ public class Pane extends Application {
 	// create a VBox for each cell in the first row and first column
 	int col = root.getColumnConstraints().size();
 	int row = root.getRowConstraints().size();
-	VBox vboxCol[] = new VBox[col];
-	VBox vboxRow[] = new VBox[row];
+	vboxCol = new VBox[col];
+	vboxRow = new VBox[row];
 	
 	VBox vboxShared = new VBox();
 	GridPane.setColumnIndex(vboxShared, 0);
@@ -138,6 +142,9 @@ public class Pane extends Application {
 				pipeArray = tempPipeArray;
 				pipeArraySize = pipeArray.length;
 			}
+	} 
+	else if (child instanceof FlowPane) {
+		vboxRow[GridPane.getRowIndex(child)].setId("flow");
 	}
 	});
 	
@@ -182,7 +189,12 @@ public class Pane extends Application {
 			Tooltip.install(p, t);
 
 			p.setWidth(sceneHead.getMinX() - sceneTail.getMinX());
-//			p.setHeight(p.getPercentWidth()/100 * p.getHeadRow());
+
+			// Scene Builder doesn't explicitly set the Row and Column index that are set to 0, so...
+			if (GridPane.getRowIndex(p) == null) GridPane.setRowIndex(p, 0);
+			if (GridPane.getColumnIndex(p) == null) GridPane.setColumnIndex(p, 0);
+			
+			p.setHeight(p.getPercentWidth()/100 * vboxRow[GridPane.getRowIndex(p)].getHeight());
 		}
 }
 	
