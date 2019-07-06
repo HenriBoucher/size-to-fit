@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -45,6 +46,9 @@ public class Pane extends Application {
 	
 	int pipeIndex = 0;
 	
+	// only call processAnchors once at startup 
+	boolean starting = true;
+	
 	@Override
 	public void start(Stage primaryStage) {
 	GridPane root = null;
@@ -62,20 +66,33 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
-	// create a VBox for each cell in the grid so we can get height and width of a grid
+	// create a VBox for each cell in the first row and first column
 	int col = root.getColumnConstraints().size();
 	int row = root.getRowConstraints().size();
-	VBox vboxArray[][] = new VBox[col][row]; 
-	for (int i = 0; i < col; i++) {
-		for (int j = 0; j < row; j++) {
-			VBox vbox = new VBox();
-			vbox.setFillWidth(true);
-			vbox.setStyle("-fx-background-color: rgba(0, 255, 255, 0.5);");
-			GridPane.setColumnIndex(vbox, i);
-			GridPane.setRowIndex(vbox, j);
-			root.getChildren().add(vbox);
-			vboxArray[i][j] = vbox;
-		}
+	VBox vboxCol[] = new VBox[col];
+	VBox vboxRow[] = new VBox[row];
+	
+	VBox vboxShared = new VBox();
+	GridPane.setColumnIndex(vboxShared, 0);
+	GridPane.setRowIndex(vboxShared, 0);
+	root.getChildren().add(vboxShared);
+	vboxShared.setStyle("-fx-background-color: transparent;");
+	vboxCol[0] = vboxShared;
+	vboxRow[0] = vboxShared;
+	
+	for (int i = 1; i < col; i++) {
+		VBox vbox = new VBox();
+		vbox.setStyle("-fx-background-color: transparent;");
+		GridPane.setColumnIndex(vbox, i);
+		root.getChildren().add(vbox);
+		vboxCol[i] = vbox;
+	}
+	for (int i = 1; i < row; i++) {
+		VBox vbox = new VBox();
+		vbox.setStyle("-fx-background-color: transparent;");
+		GridPane.setRowIndex(vbox, i);
+		root.getChildren().add(vbox);
+		vboxRow[i] = vbox;
 	}
 
 	// create all of the anchors
@@ -149,6 +166,10 @@ public class Pane extends Application {
 
 	// adjust pipes 
 	void processAnchors(){
+		if (starting) {
+			starting = false;
+			return;
+		}
 		for (int i = 0; i < pipeIndex; i++) {
 			Pipe p = pipeArray[i].p;
 			Line head = pipeArray[i].head;
@@ -156,6 +177,10 @@ public class Pane extends Application {
 			
 	        Bounds sceneTail = tail.localToScene(tail.getBoundsInLocal());
 			Bounds sceneHead = head.localToScene(head.getBoundsInLocal());
+			// Tooltip only works for pipe1 and pipe5 - don't know why
+			Tooltip t = new Tooltip(p.getId());
+			Tooltip.install(p, t);
+
 			p.setWidth(sceneHead.getMinX() - sceneTail.getMinX());
 //			p.setHeight(p.getPercentWidth()/100 * p.getHeadRow());
 		}
