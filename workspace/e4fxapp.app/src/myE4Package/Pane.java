@@ -173,6 +173,7 @@ public class Pane extends Application {
 
 	// adjust pipes 
 	void processAnchors(){
+		// skip first call as both layoutXProperty and layoutYProperty are fired on startup
 		if (starting) {
 			starting = false;
 			return;
@@ -187,14 +188,19 @@ public class Pane extends Application {
 			// Tooltip only works for pipe1 and pipe5 - don't know why
 			Tooltip t = new Tooltip(p.getId());
 			Tooltip.install(p, t);
-
-			p.setWidth(sceneHead.getMinX() - sceneTail.getMinX());
+//			p.setLayoutX(sceneTail.getMinX());
+//			p.setLayoutY(sceneTail.getMinY());
+			Double y = sceneHead.getMinY() - sceneTail.getMinY();
+			Double x = sceneHead.getMinX() - sceneTail.getMinX();
+			Double angle = Math.atan2(y, x);
+			p.setWidth(Math.sqrt(x*x + y*y));
 
 			// Scene Builder doesn't explicitly set the Row and Column index that are set to 0, so...
 			if (GridPane.getRowIndex(p) == null) GridPane.setRowIndex(p, 0);
 			if (GridPane.getColumnIndex(p) == null) GridPane.setColumnIndex(p, 0);
-			
-			p.setHeight(p.getPercentWidth()/100 * vboxRow[GridPane.getRowIndex(p)].getHeight());
+			Double h = p.getPercentWidth()/100 * vboxRow[GridPane.getRowIndex(p)].getHeight();
+			Double w = p.getPercentWidth()/100 * vboxCol[GridPane.getColumnIndex(p)].getWidth();
+			p.setHeight(Math.abs(Math.cos(angle)*h) + Math.abs(Math.sin(angle)*w));
 		}
 }
 	
