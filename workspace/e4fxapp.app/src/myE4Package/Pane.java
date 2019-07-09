@@ -70,6 +70,8 @@ public class Pane extends Application {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	
+	root.setGridLinesVisible(true);
+	
 	// create a VBox for each cell in the first row and first column
 	int col = root.getColumnConstraints().size();
 	int row = root.getRowConstraints().size();
@@ -150,34 +152,18 @@ public class Pane extends Application {
 	
 	for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
 		root.getChildren().add(entry.getValue());
-	}
-	
-	// position line() in the bottom right corner for layout property changes
-	Line bottomRight = new Line();
-	GridPane.setColumnIndex(bottomRight, root.getColumnConstraints().size() - 1);
-	GridPane.setHalignment(bottomRight, HPos.RIGHT);
-	GridPane.setRowIndex(bottomRight, root.getRowConstraints().size() - 1);
-	GridPane.setValignment(bottomRight, VPos.BOTTOM);
-	bottomRight.setStroke(Color.TRANSPARENT);
-	root.getChildren().add(bottomRight);
-
-	bottomRight.layoutXProperty().addListener(c -> {
-		processAnchors();
-	});
-	bottomRight.layoutYProperty().addListener(c -> {
-		processAnchors();
-	});
-	
+		entry.getValue().layoutXProperty().addListener(c -> {
+			processAnchors();
+		});
+		entry.getValue().layoutYProperty().addListener(c -> {
+			processAnchors();
+		});
+	}	
 	
 	}
 
 	// adjust pipes 
 	void processAnchors(){
-		// skip first call as both layoutXProperty and layoutYProperty are fired on startup
-		if (starting) {
-			starting = false;
-			return;
-		}
 		for (int i = 0; i < pipeIndex; i++) {
 			Pipe p = pipeArray[i].p;
 			Line head = pipeArray[i].head;
