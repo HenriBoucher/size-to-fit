@@ -36,7 +36,6 @@ public class Pane extends Application {
 		Pipe p;
 		Line head;
 		Line tail;
-		VBox vbox;
 	}
 	
 	HashMap <String, Line> anchorLines = new HashMap<String, Line>();
@@ -83,6 +82,7 @@ public class Pane extends Application {
 	GridPane.setRowIndex(vboxShared, 0);
 	root.getChildren().add(vboxShared);
 	vboxShared.setStyle("-fx-background-color: transparent;");
+	vboxShared.toBack();
 	vboxCol[0] = vboxShared;
 	vboxRow[0] = vboxShared;
 	
@@ -91,6 +91,7 @@ public class Pane extends Application {
 		vbox.setStyle("-fx-background-color: transparent;");
 		GridPane.setColumnIndex(vbox, i);
 		root.getChildren().add(vbox);
+		vbox.toBack();
 		vboxCol[i] = vbox;
 	}
 	for (int i = 1; i < row; i++) {
@@ -98,6 +99,7 @@ public class Pane extends Application {
 		vbox.setStyle("-fx-background-color: transparent;");
 		GridPane.setRowIndex(vbox, i);
 		root.getChildren().add(vbox);
+		vbox.toBack();
 		vboxRow[i] = vbox;
 	}
 
