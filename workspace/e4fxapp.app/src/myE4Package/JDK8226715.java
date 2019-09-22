@@ -74,6 +74,7 @@ GridPane.setHalignment(pipe2, HPos.LEFT);
 GridPane.setValignment(pipe2, VPos.CENTER);
 pipe2.setWidth(200);
 pipe2.setHeight(50);
+pipe2.setStyle("-fx-fill: red");
 
 root.getChildren().addAll(head2, tail2, pipe2);
 
@@ -84,9 +85,9 @@ head.layoutXProperty().addListener(c -> {
 });
 
 head2.layoutXProperty().addListener(c -> {
-    Bounds bHead = head2.localToScene(head2.getBoundsInLocal());
-    Bounds bTail = tail2.localToScene(tail2.getBoundsInLocal());
-    pipe.setWidth(bHead.getMinX() - bTail.getMaxX() - 50);
+    Bounds bHead2 = head2.localToScene(head2.getBoundsInLocal());
+    Bounds bTail2 = tail2.localToScene(tail2.getBoundsInLocal());
+    pipe2.setWidth(bHead2.getMinX() - bTail2.getMaxX() - 50);
 });
 
 primaryStage.setScene(new Scene(root, 300, 250));
