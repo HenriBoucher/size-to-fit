@@ -12,7 +12,7 @@
             <children xsi:type="basic:Part" xmi:id="_MVHUIBV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part2" contributionURI="bundleclass://e4fxapp.app/myE4Package.E4Poster" label="Part2"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_4mZt0BV1EeeUSIrAEN_8BA" elementId="e4fxapp.app.partstack.1">
-            <children xsi:type="basic:Part" xmi:id="_FckvABV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part3" label="Part3"/>
+            <children xsi:type="basic:Part" xmi:id="_FckvABV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part3" contributionURI="bundleclass://e4fxapp.app/myE4Package.E4pane" label="Part3"/>
             <children xsi:type="basic:Part" xmi:id="_IAJfABV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part4" label="part4"/>
           </children>
         </children>
