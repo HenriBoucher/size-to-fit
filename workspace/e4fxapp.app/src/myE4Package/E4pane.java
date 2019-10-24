@@ -55,6 +55,13 @@ public class E4pane {
 			e.printStackTrace();
 		}
 		
+		root.prefHeightProperty().bind(pane.heightProperty());
+		root.prefWidthProperty().bind(pane.widthProperty());
+
+		pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+			System.out.println("oldVal = " + oldVal + " newVal = " + newVal);
+		});
+		
 		root.setGridLinesVisible(true);
 		pane.setCenter(root);
 		// create a VBox for each cell in the first row and first column
@@ -138,31 +145,33 @@ public class E4pane {
 		}
 		});
 		
-//		for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
-//			root.getChildren().add(entry.getValue());
-//			entry.getValue().layoutXProperty().addListener(c -> {
-//				processAnchors();
-//			});
-//			entry.getValue().layoutYProperty().addListener(c -> {
-//				processAnchors();
-//			});
-//		}
 		for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
 			root.getChildren().add(entry.getValue());
+			entry.getValue().layoutXProperty().addListener(c -> {
+				processAnchors();
+			});
+			entry.getValue().layoutYProperty().addListener(c -> {
+				processAnchors();
+			});
 		}
-
-		root.layoutXProperty().addListener(c -> {
-			processAnchors();
-		});
-		root.layoutYProperty().addListener(c -> {
-			processAnchors();
-		});
+		
+//		for (Map.Entry<String, Line> entry : anchorLines.entrySet()) {
+//			root.getChildren().add(entry.getValue());
+//		}
+//
+//		root.layoutXProperty().addListener(c -> {
+//			processAnchors();
+//		});
+//		root.layoutYProperty().addListener(c -> {
+//			processAnchors();
+//		});
 		
 		}
 
 		// adjust pipes 
 		void processAnchors(){
-			System.out.println("In processAnchors");
+//			System.out.println("In processAnchors");
+			
 			for (int i = 0; i < pipeIndex; i++) {
 				Pipe p = pipeArray[i].p;
 				Line head = pipeArray[i].head;
