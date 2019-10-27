@@ -5,11 +5,11 @@
       <children xsi:type="advanced:Perspective" xmi:id="_JLshkBV1EeeUSIrAEN_8BA" elementId="e4fxapp.app.perspective.0">
         <children xsi:type="basic:PartSashContainer" xmi:id="_vmSYMBV1EeeUSIrAEN_8BA" elementId="e4fxapp.app.partsashcontainer.0">
           <children xsi:type="basic:PartStack" xmi:id="_3Udk0BV1EeeUSIrAEN_8BA" elementId="e4fxapp.app.partstack.0">
-            <children xsi:type="basic:Part" xmi:id="_KBUskBV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part1" contributionURI="bundleclass://e4fxapp.app/myE4Package.E4Test" label="Part1">
+            <children xsi:type="basic:Part" xmi:id="_KBUskBV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part1" contributionURI="" label="Part1">
               <properties key="title" value="title"/>
               <properties key="namespace prefix" value="namespace prefix"/>
             </children>
-            <children xsi:type="basic:Part" xmi:id="_MVHUIBV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part2" contributionURI="bundleclass://e4fxapp.app/myE4Package.E4Poster" label="Part2"/>
+            <children xsi:type="basic:Part" xmi:id="_MVHUIBV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part2" contributionURI="" label="Part2"/>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_4mZt0BV1EeeUSIrAEN_8BA" elementId="e4fxapp.app.partstack.1">
             <children xsi:type="basic:Part" xmi:id="_FckvABV2EeeUSIrAEN_8BA" elementId="e4fxapp.app.part.part3" contributionURI="bundleclass://e4fxapp.app/myE4Package.E4pane" label="Part3"/>
@@ -36,9 +36,5 @@
   <addons xmi:id="_HEizahVrEeeUSIrAEN_8BA" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_L5sH8BVsEeeUSIrAEN_8BA" elementId="e4fxapp.app.addon.0" contributionURI="bundleclass://org.eclipse.fx.ui.workbench.renderers.base/org.eclipse.fx.ui.workbench.renderers.base.addons.MinMaxAddon"/>
   <addons xmi:id="_SnFhIBV5EeeUSIrAEN_8BA" elementId="e4fxapp.app.addon.1" contributionURI="bundleclass://org.eclipse.fx.ui.workbench.renderers.base/org.eclipse.fx.ui.workbench.renderers.base.addons.CleanUpAddon"/>
-  <addons xmi:id="_Jf3u4BWCEeeyirSw1pDjbw" elementId="e4fxapp.app.addon.2" contributionURI="bundleclass://e4fxapp.app/myAddon.MyAddon">
-    <persistedState key="2ndKey" value="second value"/>
-    <persistedState key="PERSISTED" value="persisted"/>
-  </addons>
   <addons xmi:id="_73qrUBcXEeeWnMj6BMWXUA" elementId="e4fxapp.app.addon.3" contributionURI="bundleclass://org.eclipse.fx.ui.workbench.renderers.base/org.eclipse.fx.ui.workbench.renderers.base.addons.DnDAddon"/>
 </application:Application>
